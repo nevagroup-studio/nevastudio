@@ -22,32 +22,32 @@ const MODEL_OPTIONS: Array<{ value: HeaderModel; label: string }> = [
 
 const HEADER_COPY = {
   vi: {
-    selectModel: 'Chọn mô hình',
-    selectedModel: 'Mô hình',
-    apiKeyTitle: 'Dán API key Google AI Studio',
+    selectModel: '\u0043h\u1ecdn m\u00f4 h\u00ecnh',
+    selectedModel: 'M\u00f4 h\u00ecnh',
+    apiKeyTitle: 'D\u00e1n API key Google AI Studio',
     apiKeyDescription:
-      'Nhập API key của bạn và nhấn xác nhận. Key sẽ được lưu cho những lần sử dụng sau trên thiết bị này.',
-    apiKeyPlaceholder: 'Dán API key từ Google AI Studio vào đây...',
-    apiKeyStorageHint: 'API key được lưu cục bộ trên máy này.',
-    apiKeySavedDescription: 'API key đã được lưu và sẽ được dùng lại ở những lần sau.',
-    apiKeySavedShort: 'Đã lưu key',
-    apiKeyEmptyError: 'Vui lòng dán API key trước khi xác nhận.',
-    apiKeySaveError: 'Không thể lưu API key trên thiết bị này.',
+      'Nh\u1eadp API key c\u1ee7a b\u1ea1n v\u00e0 nh\u1ea5n x\u00e1c nh\u1eadn. Key s\u1ebd \u0111\u01b0\u1ee3c l\u01b0u cho nh\u1eefng l\u1ea7n s\u1eed d\u1ee5ng sau tr\u00ean thi\u1ebft b\u1ecb n\u00e0y.',
+    apiKeyPlaceholder: 'D\u00e1n API key t\u1eeb Google AI Studio v\u00e0o \u0111\u00e2y...',
+    apiKeyStorageHint: 'API key \u0111\u01b0\u1ee3c l\u01b0u c\u1ee5c b\u1ed9 tr\u00ean m\u00e1y n\u00e0y.',
+    apiKeySavedDescription: 'API key \u0111\u00e3 \u0111\u01b0\u1ee3c l\u01b0u v\u00e0 s\u1ebd \u0111\u01b0\u1ee3c d\u00f9ng l\u1ea1i \u1edf nh\u1eefng l\u1ea7n sau.',
+    apiKeySavedShort: '\u0110\u00e3 l\u01b0u key',
+    apiKeyEmptyError: 'Vui l\u00f2ng d\u00e1n API key tr\u01b0\u1edbc khi x\u00e1c nh\u1eadn.',
+    apiKeySaveError: 'Kh\u00f4ng th\u1ec3 l\u01b0u API key tr\u00ean thi\u1ebft b\u1ecb n\u00e0y.',
     apiKeyLabel: 'Google AI Studio API Key',
-    logoSlot: 'Vị trí logo',
-    logoHint: 'Sau này thay bằng logo chính thức',
-    updateTitle: 'Cập nhật ứng dụng',
-    updateDesktopOnly: 'Tính năng cập nhật chỉ hoạt động trong bản desktop.',
-    updateChecking: 'Đang kiểm tra bản mới...',
-    updateAvailable: 'Đang tải bản cập nhật mới nhất...',
-    updateDownloading: 'Đang tải gói cập nhật...',
-    updateReady: 'Bản cập nhật đã sẵn sàng. Bấm lại để cài và khởi động lại.',
-    updateLatest: 'Bạn đang dùng bản mới nhất.',
-    updateUnavailable: 'Chưa cấu hình nguồn cập nhật cho bản desktop này.',
-    updateUnsupported: 'Bản portable đã build xong, nhưng muốn tự cập nhật cần cấu hình nguồn phát hành.',
-    updateError: 'Không thể kiểm tra cập nhật lúc này.',
+    logoSlot: 'Logo NEVA Studio',
+    logoHint: 'Thay b\u1eb1ng logo ch\u00ednh th\u1ee9c sau',
+    updateTitle: 'C\u1eadp nh\u1eadt \u1ee9ng d\u1ee5ng',
+    updateDesktopOnly: 'T\u00ednh n\u0103ng c\u1eadp nh\u1eadt ch\u1ec9 ho\u1ea1t \u0111\u1ed9ng trong b\u1ea3n desktop.',
+    updateChecking: '\u0110ang ki\u1ec3m tra b\u1ea3n m\u1edbi...',
+    updateAvailable: '\u0110ang t\u1ea3i b\u1ea3n c\u1eadp nh\u1eadt m\u1edbi nh\u1ea5t...',
+    updateDownloading: '\u0110ang t\u1ea3i g\u00f3i c\u1eadp nh\u1eadt...',
+    updateReady: 'B\u1ea3n c\u1eadp nh\u1eadt \u0111\u00e3 s\u1eb5n s\u00e0ng. B\u1ea5m l\u1ea1i \u0111\u1ec3 c\u00e0i v\u00e0 kh\u1edfi \u0111\u1ed9ng l\u1ea1i.',
+    updateLatest: 'B\u1ea1n \u0111ang d\u00f9ng b\u1ea3n m\u1edbi nh\u1ea5t.',
+    updateUnavailable: 'B\u1ea3n desktop n\u00e0y ch\u01b0a c\u1ea5u h\u00ecnh ngu\u1ed3n c\u1eadp nh\u1eadt.',
+    updateUnsupported: 'B\u1ea3n portable \u0111\u00e3 build xong, nh\u01b0ng mu\u1ed1n t\u1ef1 c\u1eadp nh\u1eadt v\u1eabn c\u1ea7n ngu\u1ed3n ph\u00e1t h\u00e0nh.',
+    updateError: 'Kh\u00f4ng th\u1ec3 ki\u1ec3m tra c\u1eadp nh\u1eadt l\u00fac n\u00e0y.',
     updateButton: 'Update',
-    version: 'Phiên bản',
+    version: 'Phi\u00ean b\u1ea3n',
   },
   en: {
     selectModel: 'Select model',
@@ -61,7 +61,7 @@ const HEADER_COPY = {
     apiKeyEmptyError: 'Please paste an API key before confirming.',
     apiKeySaveError: 'Unable to save the API key on this device.',
     apiKeyLabel: 'Google AI Studio API Key',
-    logoSlot: 'Logo slot',
+    logoSlot: 'NEVA Studio logo',
     logoHint: 'Replace with your official logo later',
     updateTitle: 'Update app',
     updateDesktopOnly: 'Update is only available in the desktop build.',
@@ -394,7 +394,7 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
   const updateMessage = getUpdateMessage(language, updateStatus, updateDetail);
 
   return (
-    <header className="neva-panel neon-border relative mb-5 rounded-[28px] px-5 py-5 shadow-[0_24px_80px_rgba(2,6,23,0.3)] md:px-6">
+    <header className="neva-panel neon-border relative mb-5 rounded-[28px] px-5 py-4 shadow-[0_24px_80px_rgba(2,6,23,0.3)] md:px-6 md:py-4">
       <div className="absolute left-4 top-4 z-20 flex items-center gap-2 md:left-6 md:top-6">
         <button
           onClick={handleUpdateClick}
@@ -421,31 +421,31 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
         )}
       </div>
 
-      <div className="grid items-center gap-5 pt-12 lg:grid-cols-[1fr_auto_1fr] lg:pt-0">
+      <div className="grid items-center gap-4 pt-10 lg:grid-cols-[1fr_auto_1fr] lg:pt-0">
         <div className="hidden lg:block" />
 
         <div className="text-center">
-          <div className="mx-auto flex items-center justify-center gap-4 sm:gap-5">
-            <div className="flex h-20 w-20 items-center justify-center rounded-[24px] border border-cyan-300/20 bg-white/[0.04] p-2 shadow-[0_0_56px_rgba(34,211,238,0.12)] sm:h-24 sm:w-24">
+          <div className="mx-auto flex items-center justify-center gap-2 sm:gap-3">
+            <div className="flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24">
               <img
                 src={logoSrc}
                 alt={copy.logoSlot}
-                className="h-14 w-14 max-h-full max-w-full object-contain opacity-100 sm:h-16 sm:w-16"
+                className="h-20 w-20 max-h-full max-w-full object-contain opacity-100 sm:h-24 sm:w-24"
                 onError={() => setLogoSrc(buildAssetUrl('logo-placeholder.svg'))}
               />
             </div>
             <h1
-              className="neva-text-main text-3xl font-extrabold tracking-[0.06em] sm:text-4xl"
+              className="neva-text-main text-3xl font-extrabold tracking-[0.04em] sm:text-4xl"
               style={{ textShadow: '0 0 24px rgba(34, 211, 238, 0.14), 0 0 36px rgba(139, 92, 246, 0.12)' }}
             >
               {t('appTitle')}
             </h1>
           </div>
-          <div className="mt-2 flex items-center justify-center gap-2 text-[11px] font-medium text-cyan-100/55">
+          <div className="mt-1.5 flex items-center justify-center gap-2 text-[11px] font-medium text-cyan-100/55">
             <span>{updateMessage}</span>
             {desktopVersion && (
               <>
-                <span className="text-cyan-200/30">•</span>
+                <span className="text-cyan-200/30">{"\u2022"}</span>
                 <span>
                   {copy.version} {desktopVersion}
                 </span>
@@ -453,7 +453,7 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
             )}
             {!isDesktopApp && (
               <>
-                <span className="text-cyan-200/30">•</span>
+                <span className="text-cyan-200/30">{"\u2022"}</span>
                 <span>Web</span>
               </>
             )}
@@ -467,3 +467,6 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
     </header>
   );
 };
+
+
+
