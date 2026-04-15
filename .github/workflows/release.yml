@@ -29,6 +29,9 @@ jobs:
       - name: Generate Windows icon
         run: node electron/generate-icon.cjs
 
+      - name: Build web app
+        run: npm run build:web
+
       - name: Build and publish installer
         env:
           GH_OWNER: nevagroup-studio
