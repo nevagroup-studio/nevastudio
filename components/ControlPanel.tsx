@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Icon } from './icons';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
@@ -24,6 +24,23 @@ export const ControlPanel: React.FC<any> = (props) => {
     } = props;
     const { t } = useLanguage();
     const { theme } = useTheme();
+    const [remainingBalance, setRemainingBalance] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        const readBalance = () => {
+            try {
+                const raw = window.localStorage.getItem('neva_api_balance_vnd');
+                const parsed = raw ? Number(raw) : NaN;
+                setRemainingBalance(Number.isFinite(parsed) ? parsed : null);
+            } catch {
+                setRemainingBalance(null);
+            }
+        };
+
+        readBalance();
+        window.addEventListener('neva-balance-updated', readBalance);
+        return () => window.removeEventListener('neva-balance-updated', readBalance);
+    }, []);
 
     const renderPanel = () => {
         switch (activeTab) {
@@ -99,13 +116,12 @@ export const ControlPanel: React.FC<any> = (props) => {
         }
     };
 
-    const getEstimatedCost = () => {
+    const getGenerationCost = () => {
         if (!['create', 'interior', 'planning', 'cameraAngle', 'planTo3d', 'edit'].includes(activeTab)) {
             return null;
         }
 
         const modelCosts: Record<string, Record<string, number>> = {
-            'imagen-4': { '1K': 950, '2K': 1900, '4K': 3800 },
             'gemini-flash-3.1': { '1K': 250, '2K': 500, '4K': 1000 },
             'gemini-pro-3.0': { '1K': 1800, '2K': 3600, '4K': 7200 },
             'gemini-2.5-flash-image': { '1K': 250, '2K': 500, '4K': 1000 },
@@ -121,15 +137,13 @@ export const ControlPanel: React.FC<any> = (props) => {
             perImage,
             total,
             modelLabel:
-                modelKey === 'imagen-4'
-                    ? 'Imagen 4'
-                    : modelKey === 'gemini-flash-3.1' || modelKey === 'gemini-2.5-flash-image'
-                        ? 'Gemini Flash 3.1'
-                        : 'Gemini Pro 3.0',
+                modelKey === 'gemini-flash-3.1' || modelKey === 'gemini-2.5-flash-image'
+                    ? 'Gemini Flash 3.1'
+                    : 'Gemini Pro 3.0',
         };
     };
 
-    const estimatedCost = getEstimatedCost();
+    const generationCost = getGenerationCost();
     const formatVnd = (value: number) => new Intl.NumberFormat('vi-VN').format(value);
 
     return (
@@ -145,23 +159,31 @@ export const ControlPanel: React.FC<any> = (props) => {
                 {getButtonText()}
             </button>
 
-            {estimatedCost && (
+            {generationCost && (
                 <div className="neva-nav rounded-2xl border border-cyan-300/12 px-4 py-3">
                     <div className="flex items-start justify-between gap-3">
                         <div>
                             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-200/80">
-                                {'Chi phí dự kiến'}
+                                {'Chi ph\u00ed t\u1ea1o \u1ea3nh'}
                             </p>
                             <p className={`mt-1 text-sm ${theme.textSub}`}>
-                                {estimatedCost.modelLabel} {'·'} {Math.max(1, Number(imageCount || 1))} {'ảnh'} {'·'} {imageSize || '1K'}
+                                {generationCost.modelLabel} {'\u2022'} {Math.max(1, Number(imageCount || 1))} {'\u1ea3nh'} {'\u2022'} {imageSize || '1K'}
                             </p>
                         </div>
                         <p className="text-right text-lg font-extrabold text-cyan-200">
-                            {formatVnd(estimatedCost.total)} {'đ'}
+                            {formatVnd(generationCost.total)} {'\u0111'}
+                        </p>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/8 pt-3">
+                        <p className={`text-xs font-semibold uppercase tracking-[0.16em] ${theme.textSub}`}>
+                            {'S\u1ed1 d\u01b0 c\u00f2n l\u1ea1i'}
+                        </p>
+                        <p className="text-sm font-bold text-lime-300">
+                            {remainingBalance === null ? '--' : `${formatVnd(remainingBalance)} \u0111`}
                         </p>
                     </div>
                     <p className={`mt-2 text-xs ${theme.textSub}`}>
-                        {'Ước tính khoảng'} {formatVnd(estimatedCost.perImage)} {'đ / ảnh. Con số này chỉ để tham khảo trước khi tạo.'}
+                        {'M\u1ee9c ph\u00ed c\u1ed1 \u0111\u1ecbnh:'} {formatVnd(generationCost.perImage)} {'\u0111 / \u1ea3nh'}
                     </p>
                 </div>
             )}

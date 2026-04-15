@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import { createPortal } from 'react-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Icon } from './icons';
 
-type HeaderModel = 'imagen-4' | 'gemini-flash-3.1' | 'gemini-pro-3.0';
+type HeaderModel = 'gemini-flash-3.1' | 'gemini-pro-3.0';
 type UpdateStatusType =
   | 'idle'
   | 'checking'
@@ -14,19 +14,31 @@ type UpdateStatusType =
   | 'error'
   | 'unsupported';
 
-const MODEL_OPTIONS: Array<{ value: HeaderModel; label: string }> = [
-  { value: 'imagen-4', label: 'Imagen 4' },
-  { value: 'gemini-flash-3.1', label: 'Gemini Flash 3.1' },
-  { value: 'gemini-pro-3.0', label: 'Gemini Pro 3.0' },
+const MODEL_OPTIONS: Array<{ value: HeaderModel; label: string; description: { vi: string; en: string } }> = [
+  {
+    value: 'gemini-flash-3.1',
+    label: 'Gemini Flash 3.1',
+    description: {
+      vi: 'Nhanh nh\u1ea5t, ph\u00f9 h\u1ee3p ph\u00e1c th\u1ea3o, test prompt v\u00e0 l\u1ea5y nh\u00e1p.',
+      en: 'Fastest option for draft renders and prompt testing.',
+    },
+  },
+  {
+    value: 'gemini-pro-3.0',
+    label: 'Gemini Pro 3.0',
+    description: {
+      vi: 'Ch\u1ea5t l\u01b0\u1ee3ng cao nh\u1ea5t, chi ti\u1ebft t\u1ed1t h\u01a1n, chi ph\u00ed cao h\u01a1n.',
+      en: 'Highest quality with better detail at a higher cost.',
+    },
+  },
 ];
 
 const HEADER_COPY = {
   vi: {
-    selectModel: '\u0043h\u1ecdn m\u00f4 h\u00ecnh',
+    selectModel: 'Ch\u1ecdn m\u00f4 h\u00ecnh',
     selectedModel: 'M\u00f4 h\u00ecnh',
     apiKeyTitle: 'D\u00e1n API key Google AI Studio',
-    apiKeyDescription:
-      'Nh\u1eadp API key c\u1ee7a b\u1ea1n v\u00e0 nh\u1ea5n x\u00e1c nh\u1eadn. Key s\u1ebd \u0111\u01b0\u1ee3c l\u01b0u cho nh\u1eefng l\u1ea7n s\u1eed d\u1ee5ng sau tr\u00ean thi\u1ebft b\u1ecb n\u00e0y.',
+    apiKeyDescription: 'Nh\u1eadp API key c\u1ee7a b\u1ea1n v\u00e0 nh\u1ea5n x\u00e1c nh\u1eadn. Key s\u1ebd \u0111\u01b0\u1ee3c l\u01b0u cho nh\u1eefng l\u1ea7n s\u1eed d\u1ee5ng sau tr\u00ean thi\u1ebft b\u1ecb n\u00e0y.',
     apiKeyPlaceholder: 'D\u00e1n API key t\u1eeb Google AI Studio v\u00e0o \u0111\u00e2y...',
     apiKeyStorageHint: 'API key \u0111\u01b0\u1ee3c l\u01b0u c\u1ee5c b\u1ed9 tr\u00ean m\u00e1y n\u00e0y.',
     apiKeySavedDescription: 'API key \u0111\u00e3 \u0111\u01b0\u1ee3c l\u01b0u v\u00e0 s\u1ebd \u0111\u01b0\u1ee3c d\u00f9ng l\u1ea1i \u1edf nh\u1eefng l\u1ea7n sau.',
@@ -34,8 +46,11 @@ const HEADER_COPY = {
     apiKeyEmptyError: 'Vui l\u00f2ng d\u00e1n API key tr\u01b0\u1edbc khi x\u00e1c nh\u1eadn.',
     apiKeySaveError: 'Kh\u00f4ng th\u1ec3 l\u01b0u API key tr\u00ean thi\u1ebft b\u1ecb n\u00e0y.',
     apiKeyLabel: 'Google AI Studio API Key',
+    balanceLabel: 'S\u1ed1 d\u01b0 c\u00f2n l\u1ea1i (VND)',
+    balancePlaceholder: 'V\u00ed d\u1ee5: 500000',
+    balanceHint: 'S\u1ed1 d\u01b0 n\u00e0y \u0111\u01b0\u1ee3c b\u1ea1n nh\u1eadp th\u1ee7 c\u00f4ng, app kh\u00f4ng th\u1ec3 t\u1ef1 \u0111\u1ecdc s\u1ed1 d\u01b0 th\u1eadt t\u1eeb API key.',
+    savedBalance: 'S\u1ed1 d\u01b0 c\u00f2n l\u1ea1i',
     logoSlot: 'Logo NEVA Studio',
-    logoHint: 'Thay b\u1eb1ng logo ch\u00ednh th\u1ee9c sau',
     updateTitle: 'C\u1eadp nh\u1eadt \u1ee9ng d\u1ee5ng',
     updateDesktopOnly: 'T\u00ednh n\u0103ng c\u1eadp nh\u1eadt ch\u1ec9 ho\u1ea1t \u0111\u1ed9ng trong b\u1ea3n desktop.',
     updateChecking: '\u0110ang ki\u1ec3m tra b\u1ea3n m\u1edbi...',
@@ -48,6 +63,7 @@ const HEADER_COPY = {
     updateError: 'Kh\u00f4ng th\u1ec3 ki\u1ec3m tra c\u1eadp nh\u1eadt l\u00fac n\u00e0y.',
     updateButton: 'Update',
     version: 'Phi\u00ean b\u1ea3n',
+    modelHelp: 'Ch\u1ecdn model ph\u00f9 h\u1ee3p theo ch\u1ea5t l\u01b0\u1ee3ng v\u00e0 chi ph\u00ed. B\u1ea1n c\u00f3 th\u1ec3 \u0111\u1ed5i b\u1ea5t c\u1ee9 l\u00fac n\u00e0o.',
   },
   en: {
     selectModel: 'Select model',
@@ -61,8 +77,11 @@ const HEADER_COPY = {
     apiKeyEmptyError: 'Please paste an API key before confirming.',
     apiKeySaveError: 'Unable to save the API key on this device.',
     apiKeyLabel: 'Google AI Studio API Key',
+    balanceLabel: 'Remaining balance (VND)',
+    balancePlaceholder: 'Example: 500000',
+    balanceHint: 'This balance is entered manually. The app cannot read your real balance from the API key.',
+    savedBalance: 'Balance left',
     logoSlot: 'NEVA Studio logo',
-    logoHint: 'Replace with your official logo later',
     updateTitle: 'Update app',
     updateDesktopOnly: 'Update is only available in the desktop build.',
     updateChecking: 'Checking for a newer version...',
@@ -75,8 +94,11 @@ const HEADER_COPY = {
     updateError: 'Unable to check for updates right now.',
     updateButton: 'Update',
     version: 'Version',
+    modelHelp: 'Choose the model that fits your quality and cost target. You can switch at any time.',
   },
 } as const;
+
+const formatVnd = (value: number) => new Intl.NumberFormat('vi-VN').format(value);
 
 const getUpdateMessage = (
   language: keyof typeof HEADER_COPY,
@@ -114,7 +136,9 @@ const HeaderControls: React.FC<{
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = React.useState(false);
   const [isModelModalOpen, setIsModelModalOpen] = React.useState(false);
   const [apiKeyInput, setApiKeyInput] = React.useState('');
+  const [balanceInput, setBalanceInput] = React.useState('');
   const [hasSavedApiKey, setHasSavedApiKey] = React.useState(false);
+  const [savedBalance, setSavedBalance] = React.useState<number | null>(null);
   const [portalRoot, setPortalRoot] = React.useState<HTMLElement | null>(null);
 
   React.useEffect(() => {
@@ -124,11 +148,17 @@ const HeaderControls: React.FC<{
   React.useEffect(() => {
     try {
       const savedKey = window.localStorage.getItem('neva_google_ai_studio_api_key') || '';
+      const savedBalanceRaw = window.localStorage.getItem('neva_api_balance_vnd') || '';
+      const parsedBalance = Number(savedBalanceRaw);
       setApiKeyInput(savedKey);
       setHasSavedApiKey(Boolean(savedKey.trim()));
+      setBalanceInput(savedBalanceRaw);
+      setSavedBalance(Number.isFinite(parsedBalance) ? parsedBalance : null);
     } catch {
       setApiKeyInput('');
+      setBalanceInput('');
       setHasSavedApiKey(false);
+      setSavedBalance(null);
     }
   }, []);
 
@@ -140,8 +170,19 @@ const HeaderControls: React.FC<{
     }
 
     try {
+      const normalizedBalance = balanceInput.replace(/[^\d]/g, '');
+      const parsedBalance = normalizedBalance ? Number(normalizedBalance) : null;
       window.localStorage.setItem('neva_google_ai_studio_api_key', trimmedKey);
+      if (parsedBalance !== null && Number.isFinite(parsedBalance)) {
+        window.localStorage.setItem('neva_api_balance_vnd', String(parsedBalance));
+        setSavedBalance(parsedBalance);
+      } else {
+        window.localStorage.removeItem('neva_api_balance_vnd');
+        setSavedBalance(null);
+      }
+      window.dispatchEvent(new Event('neva-balance-updated'));
       setHasSavedApiKey(true);
+      setBalanceInput(parsedBalance !== null && Number.isFinite(parsedBalance) ? String(parsedBalance) : '');
       setIsApiKeyModalOpen(false);
     } catch {
       alert(copy.apiKeySaveError);
@@ -174,11 +215,16 @@ const HeaderControls: React.FC<{
 
           <button
             onClick={() => setIsApiKeyModalOpen(true)}
-            className="neva-icon-button flex items-center gap-1.5 rounded-2xl px-4 py-2.5 text-xs font-bold transition-all duration-200 md:text-sm"
+            className="neva-icon-button flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold transition-all duration-200 md:text-sm"
             title={t('selectApiKey')}
           >
             <Icon name="key" className={`h-4 w-4 ${hasSavedApiKey ? 'text-cyan-300' : 'text-lime-300'}`} />
-            <span>{hasSavedApiKey ? copy.apiKeySavedShort : 'APIKEY'}</span>
+            <div className="flex flex-col items-start leading-tight">
+              <span>{hasSavedApiKey ? copy.apiKeySavedShort : 'APIKEY'}</span>
+              {savedBalance !== null && (
+                <span className="text-[10px] font-semibold text-lime-300">{formatVnd(savedBalance)} \u0111</span>
+              )}
+            </div>
           </button>
 
           <div className="neva-nav flex space-x-1 rounded-2xl p-1">
@@ -208,15 +254,11 @@ const HeaderControls: React.FC<{
         isModelModalOpen &&
         createPortal(
           <div className="fixed inset-0 z-[220] flex items-center justify-center bg-black/72 px-4 backdrop-blur-md">
-            <div className="neva-panel neon-border w-full max-w-3xl rounded-[28px] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.4)]">
+            <div className="neva-panel neon-border w-full max-w-2xl rounded-[28px] p-6 shadow-[0_24px_80px_rgba(2,6,23,0.4)]">
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
                   <h2 className="neva-text-main text-xl font-extrabold tracking-[0.04em] md:text-2xl">{copy.selectModel}</h2>
-                  <p className="neva-text-sub mt-2 text-sm leading-6">
-                    {language === 'vi'
-                      ? 'Chọn model phù hợp theo chất lượng và chi phí. Bạn có thể đổi bất cứ lúc nào.'
-                      : 'Choose the model that fits your quality and cost target. You can switch at any time.'}
-                  </p>
+                  <p className="neva-text-sub mt-2 text-sm leading-6">{copy.modelHelp}</p>
                 </div>
                 <button
                   onClick={() => setIsModelModalOpen(false)}
@@ -227,22 +269,9 @@ const HeaderControls: React.FC<{
                 </button>
               </div>
 
-              <div className="grid gap-3 md:grid-cols-3">
+              <div className="grid gap-3 md:grid-cols-2">
                 {MODEL_OPTIONS.map((option) => {
                   const isActive = aiModel === option.value;
-                  const description =
-                    option.value === 'imagen-4'
-                      ? language === 'vi'
-                        ? 'Cân bằng tốc độ và chất lượng, phù hợp render hằng ngày.'
-                        : 'Balanced speed and quality for most daily renders.'
-                      : option.value === 'gemini-flash-3.1'
-                        ? language === 'vi'
-                          ? 'Nhanh nhất, phù hợp phác thảo, test prompt và lấy nháp.'
-                          : 'Fastest option for draft renders and prompt testing.'
-                        : language === 'vi'
-                          ? 'Chất lượng cao nhất, chi tiết tốt hơn, chi phí cao hơn.'
-                          : 'Highest quality with better detail at a higher cost.';
-
                   return (
                     <button
                       key={option.value}
@@ -260,7 +289,9 @@ const HeaderControls: React.FC<{
                         <h3 className="text-base font-extrabold tracking-[0.03em]">{option.label}</h3>
                         {isActive && <Icon name="check" className="h-5 w-5" />}
                       </div>
-                      <p className={`mt-2 text-sm leading-6 ${isActive ? 'text-slate-900/85' : 'neva-text-sub'}`}>{description}</p>
+                      <p className={`mt-2 text-sm leading-6 ${isActive ? 'text-slate-900/85' : 'neva-text-sub'}`}>
+                        {option.description[language]}
+                      </p>
                     </button>
                   );
                 })}
@@ -299,8 +330,23 @@ const HeaderControls: React.FC<{
                 className="neva-input neva-text-main min-h-[120px] w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
               />
 
+              <div className="mt-4">
+                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-cyan-200/80">
+                  {copy.balanceLabel}
+                </label>
+                <input
+                  value={balanceInput}
+                  onChange={(e) => setBalanceInput(e.target.value.replace(/[^\d]/g, ''))}
+                  placeholder={copy.balancePlaceholder}
+                  className="neva-input neva-text-main w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none"
+                />
+                <p className="neva-text-sub mt-2 text-xs leading-5">{copy.balanceHint}</p>
+              </div>
+
               <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="neva-text-sub text-xs leading-5">{hasSavedApiKey ? copy.apiKeySavedDescription : copy.apiKeyStorageHint}</p>
+                <p className="neva-text-sub text-xs leading-5">
+                  {hasSavedApiKey ? copy.apiKeySavedDescription : copy.apiKeyStorageHint}
+                </p>
                 {hasSavedApiKey && (
                   <button
                     onClick={handleClearApiKey}
@@ -310,6 +356,12 @@ const HeaderControls: React.FC<{
                   </button>
                 )}
               </div>
+
+              {savedBalance !== null && (
+                <div className="mt-3 rounded-2xl border border-lime-300/20 bg-lime-400/8 px-4 py-3 text-sm text-lime-200">
+                  {copy.savedBalance}: <strong>{formatVnd(savedBalance)} \u0111</strong>
+                </div>
+              )}
 
               <div className="mt-5 flex justify-end gap-3">
                 <button
@@ -445,7 +497,7 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
             <span>{updateMessage}</span>
             {desktopVersion && (
               <>
-                <span className="text-cyan-200/30">{"\u2022"}</span>
+                <span className="text-cyan-200/30">\u2022</span>
                 <span>
                   {copy.version} {desktopVersion}
                 </span>
@@ -453,7 +505,7 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
             )}
             {!isDesktopApp && (
               <>
-                <span className="text-cyan-200/30">{"\u2022"}</span>
+                <span className="text-cyan-200/30">\u2022</span>
                 <span>Web</span>
               </>
             )}
@@ -467,6 +519,3 @@ export const Header: React.FC<HeaderProps> = ({ onBack, isProMode: _isProMode, a
     </header>
   );
 };
-
-
-

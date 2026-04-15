@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs/promises');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
@@ -12,6 +13,38 @@ const getWindowIconPath = () => {
     return path.join(__dirname, '..', 'build-resources', 'icon.png');
   }
   return path.join(__dirname, '..', 'dist', 'branding', 'icon.png');
+};
+
+const getGeneratedImagesDir = async () => {
+  const baseDir = path.join(app.getPath('pictures'), 'NEVA Studio', 'Generated Images');
+  await fs.mkdir(baseDir, { recursive: true });
+  return baseDir;
+};
+
+const slugifyPrompt = (prompt = '') =>
+  prompt
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 48)
+    .toLowerCase() || 'render';
+
+const saveDataUrlToFile = async (dataUrl, prompt = '') => {
+  const match = /^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/.exec(dataUrl || '');
+  if (!match) {
+    throw new Error('Invalid image data');
+  }
+
+  const mimeType = match[1].toLowerCase();
+  const base64 = match[2];
+  const extension = mimeType.includes('jpeg') ? 'jpg' : mimeType.includes('webp') ? 'webp' : 'png';
+  const dir = await getGeneratedImagesDir();
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const fileName = `neva-${slugifyPrompt(prompt)}-${timestamp}.${extension}`;
+  const filePath = path.join(dir, fileName);
+  await fs.writeFile(filePath, Buffer.from(base64, 'base64'));
+  return filePath;
 };
 
 const sendUpdaterStatus = (status, message = '') => {
@@ -80,6 +113,10 @@ app.whenReady().then(async () => {
       sendUpdaterStatus('error', message);
       return { status: 'error', message };
     }
+  });
+  ipcMain.handle('desktop:save-generated-image', async (_event, payload) => {
+    const filePath = await saveDataUrlToFile(payload?.dataUrl, payload?.prompt || 'render');
+    return { path: filePath };
   });
   ipcMain.on('desktop:install-update', () => {
     autoUpdater.quitAndInstall();

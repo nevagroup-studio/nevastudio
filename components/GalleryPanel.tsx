@@ -238,7 +238,6 @@ const LoadingState: React.FC<{ isVideo: boolean, isPromptGen: boolean, message: 
             <div className={`h-full flex flex-col items-center justify-center text-center ${theme.textSub}`}>
                 <Icon name="cpu-chip" className="w-16 h-16 mb-4 text-slate-500 animate-pulse" />
                 <h3 className={`text-xl font-semibold ${theme.textMain}`}>{message || t('loadingPromptHeader')}</h3>
-                <p className="mt-2 text-sm max-w-sm">{t('loadingPromptHelp')}</p>
             </div>
         );
     }
@@ -247,26 +246,13 @@ const LoadingState: React.FC<{ isVideo: boolean, isPromptGen: boolean, message: 
             <div className={`h-full flex flex-col items-center justify-center text-center ${theme.textSub}`}>
                 <Icon name="video-camera" className="w-16 h-16 mb-4 text-slate-500 animate-pulse" />
                 <h3 className={`text-xl font-semibold ${theme.textMain}`}>{message || t('loadingVideoHeader')}</h3>
-                <p className="mt-2 text-sm max-w-sm">{t('loadingVideoHelp')}</p>
             </div>
         );
     }
     return (
         <div className="h-full flex flex-col items-center justify-center text-center">
             <Icon name="camera" className="w-16 h-16 mb-6 text-slate-500 animate-pulse" />
-            <h3 className={`text-xl font-semibold ${theme.textMain} mb-8`}>{message || t('loadingMessageDefault')}</h3>
-            <div className={`p-4 ${theme.inputBg} border ${theme.border} rounded-lg ${theme.textSub} text-sm w-full max-w-lg text-left space-y-3`}>
-                <div>
-                    <p><strong className={`font-semibold ${theme.textMain}`}>{t('loadingUsageLimit')}</strong> {t('loadingUsageText')}</p>
-                    <p>{t('loadingUsageNote')}</p>
-                </div>
-                <div className="pt-2 border-t border-slate-700/50">
-                    <p className="text-cyan-300 italic flex items-center gap-2">
-                        <Icon name="sparkles" className="w-4 h-4 flex-shrink-0" />
-                        {t('loadingAdText')}
-                    </p>
-                </div>
-            </div>
+            <h3 className={`text-2xl font-semibold ${theme.textMain}`}>{'\u0110ang t\u1ea1o \u1ea3nh'}</h3>
         </div>
     );
 };
@@ -599,3 +585,4 @@ export const GalleryPanel: React.FC<GalleryPanelProps> = ({
         </div>
     );
 };
+

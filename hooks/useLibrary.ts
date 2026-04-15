@@ -1,9 +1,8 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import type { LibraryItem } from '../types';
-import { 
-    addLibraryItemToDB, 
-    getAllLibraryItemsFromDB, 
+import {
+    addLibraryItemToDB,
+    getAllLibraryItemsFromDB,
     deleteLibraryItemFromDB,
     deleteMultipleLibraryItemsFromDB,
     clearLibraryFromDB
@@ -13,14 +12,13 @@ export const useLibrary = () => {
     const [library, setLibrary] = useState<LibraryItem[]>([]);
     const [justSavedId, setJustSavedId] = useState<string | null>(null);
 
-    // Load library from IndexedDB on initial render
     useEffect(() => {
         const loadLibrary = async () => {
             try {
                 const savedLibrary = await getAllLibraryItemsFromDB();
                 setLibrary(savedLibrary);
             } catch (error) {
-                console.error("Failed to load library from IndexedDB:", error);
+                console.error('Failed to load library from IndexedDB:', error);
             }
         };
 
@@ -28,25 +26,32 @@ export const useLibrary = () => {
     }, []);
 
     const addImageToLibrary = useCallback(async (imageDataUrl: string, prompt?: string) => {
-        // Prevent duplicates
         if (library.some(item => item.imageData === imageDataUrl)) {
-            console.log("Image already in library.");
             return;
         }
 
-        const newLibraryItem: LibraryItem = { 
-            id: Date.now().toString(), 
+        const newLibraryItem: LibraryItem = {
+            id: Date.now().toString(),
             imageData: imageDataUrl,
-            prompt: prompt 
+            prompt: prompt
         };
-        
+
         try {
             await addLibraryItemToDB(newLibraryItem);
             setLibrary(prev => [newLibraryItem, ...prev]);
             setJustSavedId(newLibraryItem.id);
-            setTimeout(() => setJustSavedId(null), 2000); // Reset after 2 seconds
+            setTimeout(() => setJustSavedId(null), 2000);
+
+            if (window.desktopApp?.saveGeneratedImage) {
+                window.desktopApp.saveGeneratedImage({
+                    dataUrl: imageDataUrl,
+                    prompt,
+                }).catch((error) => {
+                    console.error('Failed to save generated image to local folder:', error);
+                });
+            }
         } catch (error) {
-            console.error("Failed to save library item to IndexedDB:", error);
+            console.error('Failed to save library item to IndexedDB:', error);
         }
     }, [library]);
 
@@ -55,7 +60,7 @@ export const useLibrary = () => {
             await deleteLibraryItemFromDB(id);
             setLibrary(prev => prev.filter(item => item.id !== id));
         } catch (error) {
-            console.error("Failed to delete library item from IndexedDB:", error);
+            console.error('Failed to delete library item from IndexedDB:', error);
         }
     }, []);
 
@@ -64,7 +69,7 @@ export const useLibrary = () => {
             await deleteMultipleLibraryItemsFromDB(ids);
             setLibrary(prev => prev.filter(item => !ids.includes(item.id)));
         } catch (error) {
-            console.error("Failed to delete multiple library items from IndexedDB:", error);
+            console.error('Failed to delete multiple library items from IndexedDB:', error);
         }
     }, []);
 
@@ -73,9 +78,9 @@ export const useLibrary = () => {
             await clearLibraryFromDB();
             setLibrary([]);
         } catch (error) {
-            console.error("Failed to clear library from IndexedDB:", error);
+            console.error('Failed to clear library from IndexedDB:', error);
         }
     }, []);
-    
+
     return { library, addImageToLibrary, removeImageFromLibrary, removeMultipleImagesFromLibrary, clearLibrary, justSavedId };
 };

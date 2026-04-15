@@ -65,14 +65,14 @@ export default function App() {
   const [editTool, setEditTool] = useState<'lasso' | 'brush'>('brush');
   const [fullscreenData, setFullscreenData] = useState<{ images: string[], index: number } | null>(null);
   const [videoModel] = useState('veo-3.1-fast-generate-preview');
-  const [aiModel, setAiModel] = useState<'imagen-4' | 'gemini-flash-3.1' | 'gemini-pro-3.0'>(() => {
+  const [aiModel, setAiModel] = useState<'gemini-flash-3.1' | 'gemini-pro-3.0'>(() => {
     try {
       const savedModel = window.localStorage.getItem('neva_selected_model');
-      if (savedModel === 'imagen-4' || savedModel === 'gemini-flash-3.1' || savedModel === 'gemini-pro-3.0') {
+      if (savedModel === 'gemini-flash-3.1' || savedModel === 'gemini-pro-3.0') {
         return savedModel;
       }
     } catch {}
-    return 'imagen-4';
+    return 'gemini-flash-3.1';
   });
   const resolvedImageModel = aiModel === 'gemini-pro-3.0' ? 'gemini-3-pro-image-preview' : 'gemini-2.5-flash-image';
   const isProMode = aiModel === 'gemini-pro-3.0';
@@ -885,9 +885,15 @@ export default function App() {
 
   if (!isAppStarted) return null;
 
+  const animatedScreenKey = activeTab;
+
   return (
-    <div className={`min-h-screen ${theme.appBg} ${theme.textMain} font-sans pb-20 transition-colors duration-300`}>
-        <div className="mx-auto max-w-[1600px] px-4 py-4 lg:px-6">
+    <div className={`relative min-h-screen overflow-x-clip ${theme.appBg} ${theme.textMain} font-sans pb-20 transition-colors duration-300`}>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] overflow-hidden">
+            <div className="neva-glow-orb neva-glow-orb-left" />
+            <div className="neva-glow-orb neva-glow-orb-right" />
+        </div>
+        <div className="relative mx-auto max-w-[1600px] px-4 py-4 lg:px-6">
             <Header isProMode={isProMode} aiModel={aiModel} onModelChange={setAiModel} />
             <TopNavBar activeTab={activeTab} onTabChange={handleTabChange} isProMode={isProMode} />
             
@@ -999,7 +1005,7 @@ export default function App() {
                     </div>
                 </div>
             )}
-            <main className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
+            <main key={animatedScreenKey} className="neva-screen-enter mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
                 {activeTab === 'utilities' ? (
                     <UtilitiesView 
                         isProMode={isProMode}

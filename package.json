@@ -1,7 +1,7 @@
 {
   "name": "neva-studio",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "NEVA Studio desktop and web app",
   "type": "module",
   "main": "electron/main.cjs",
