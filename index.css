@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --neva-bg: #040816;
+  --neva-bg-top: rgba(139, 92, 246, 0.2);
+  --neva-bg-right: rgba(34, 211, 238, 0.12);
+  --neva-panel: rgba(15, 23, 42, 0.82);
+  --neva-surface: rgba(12, 18, 36, 0.72);
+  --neva-nav: rgba(9, 15, 31, 0.78);
+  --neva-input: rgba(3, 9, 23, 0.62);
+  --neva-text-main: #f8fafc;
+  --neva-text-sub: #94a3b8;
+  --neva-border: rgba(255, 255, 255, 0.1);
+  --neva-border-strong: rgba(255, 255, 255, 0.16);
+  --neva-accent-start: #8b5cf6;
+  --neva-accent-mid: #22d3ee;
+  --neva-accent-end: #a3e635;
+  --neva-shadow: 0 24px 80px rgba(2, 6, 23, 0.45);
+  --neva-shadow-soft: 0 18px 60px rgba(2, 6, 23, 0.32);
+  --neva-gradient: linear-gradient(135deg, var(--neva-accent-start) 0%, var(--neva-accent-mid) 48%, var(--neva-accent-end) 100%);
+}
+
+.neva-theme {
+  color: var(--neva-text-main);
+}
+
+.neva-theme-dark {
+  --neva-bg: #040816;
+  --neva-bg-top: rgba(139, 92, 246, 0.22);
+  --neva-bg-right: rgba(34, 211, 238, 0.14);
+  --neva-panel: rgba(15, 23, 42, 0.82);
+  --neva-surface: rgba(12, 18, 36, 0.72);
+  --neva-nav: rgba(9, 15, 31, 0.78);
+  --neva-input: rgba(3, 9, 23, 0.62);
+  --neva-text-main: #f8fafc;
+  --neva-text-sub: #94a3b8;
+  --neva-border: rgba(255, 255, 255, 0.1);
+  --neva-border-strong: rgba(255, 255, 255, 0.16);
+}
+
+.neva-theme-light {
+  --neva-bg: #e2ecff;
+  --neva-bg-top: rgba(124, 58, 237, 0.14);
+  --neva-bg-right: rgba(34, 211, 238, 0.1);
+  --neva-panel: rgba(255, 255, 255, 0.74);
+  --neva-surface: rgba(255, 255, 255, 0.64);
+  --neva-nav: rgba(255, 255, 255, 0.84);
+  --neva-input: rgba(255, 255, 255, 0.76);
+  --neva-text-main: #0f172a;
+  --neva-text-sub: #475569;
+  --neva-border: rgba(15, 23, 42, 0.12);
+  --neva-border-strong: rgba(15, 23, 42, 0.2);
+  --neva-shadow: 0 28px 80px rgba(59, 130, 246, 0.14);
+  --neva-shadow-soft: 0 22px 60px rgba(59, 130, 246, 0.12);
+}
+
+.neva-theme-warm {
+  --neva-bg: #130b17;
+  --neva-bg-top: rgba(217, 119, 6, 0.18);
+  --neva-bg-right: rgba(244, 114, 182, 0.12);
+  --neva-panel: rgba(31, 18, 27, 0.84);
+  --neva-surface: rgba(26, 14, 23, 0.72);
+  --neva-nav: rgba(24, 14, 23, 0.8);
+  --neva-input: rgba(22, 11, 18, 0.7);
+  --neva-text-main: #fff7ed;
+  --neva-text-sub: #fdba74;
+  --neva-border: rgba(251, 191, 36, 0.12);
+  --neva-border-strong: rgba(251, 191, 36, 0.2);
+}
+
+.neva-theme-cold {
+  --neva-bg: #020617;
+  --neva-bg-top: rgba(56, 189, 248, 0.14);
+  --neva-bg-right: rgba(14, 165, 233, 0.12);
+  --neva-panel: rgba(5, 17, 34, 0.84);
+  --neva-surface: rgba(3, 12, 24, 0.74);
+  --neva-nav: rgba(4, 14, 28, 0.82);
+  --neva-input: rgba(2, 12, 25, 0.72);
+  --neva-text-main: #e0f2fe;
+  --neva-text-sub: #7dd3fc;
+  --neva-border: rgba(34, 211, 238, 0.12);
+  --neva-border-strong: rgba(34, 211, 238, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  color: var(--neva-text-main);
+  background:
+    radial-gradient(circle at top left, var(--neva-bg-top), transparent 30%),
+    radial-gradient(circle at top right, var(--neva-bg-right), transparent 26%),
+    linear-gradient(180deg, color-mix(in srgb, var(--neva-bg) 94%, #020617 6%), var(--neva-bg));
+  background-color: var(--neva-bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.26);
+  color: #f8fafc;
+}
+
+.neva-app-bg {
+  background:
+    radial-gradient(circle at top left, var(--neva-bg-top), transparent 30%),
+    radial-gradient(circle at top right, var(--neva-bg-right), transparent 26%),
+    linear-gradient(180deg, color-mix(in srgb, var(--neva-bg) 94%, #020617 6%), var(--neva-bg));
+  background-color: var(--neva-bg);
+}
+
+.neva-panel,
+.neva-nav,
+.neva-input {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.neva-panel {
+  background: var(--neva-panel);
+  border-color: var(--neva-border);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--neva-shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.neva-nav {
+  background: var(--neva-nav);
+  border-color: var(--neva-border);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 54px rgba(2, 6, 23, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.neva-border {
+  border-color: var(--neva-border);
+}
+
+.neva-text-main {
+  color: var(--neva-text-main);
+}
+
+.neva-text-sub {
+  color: var(--neva-text-sub);
+}
+
+.neva-accent-text {
+  color: var(--neva-accent-mid);
+}
+
+.neva-input {
+  background: var(--neva-input);
+  border-color: var(--neva-border);
+  color: var(--neva-text-main);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.neva-input::placeholder {
+  color: color-mix(in srgb, var(--neva-text-sub) 78%, transparent);
+}
+
+.neva-input:focus,
+.neva-input:focus-visible {
+  border-color: rgba(34, 211, 238, 0.44);
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(34, 211, 238, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.neva-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--neva-text-main);
+  border: 1px solid var(--neva-border);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.neva-btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(34, 211, 238, 0.22);
+  transform: translateY(-1px);
+}
+
+.neva-btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.neva-primary-button {
+  background: var(--neva-gradient);
+  color: #020617;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 34px rgba(34, 211, 238, 0.18), 0 14px 36px rgba(2, 6, 23, 0.32);
+}
+
+.neva-primary-button:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.neva-primary-button:disabled {
+  background: rgba(71, 85, 105, 0.5);
+  color: rgba(248, 250, 252, 0.7);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.neva-icon-button {
+  background: rgba(8, 15, 32, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--neva-text-main);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.22);
+}
+
+.neva-icon-button:hover {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(34, 211, 238, 0.22);
+}
+
+.neva-pill-group {
+  background: rgba(6, 11, 25, 0.48);
+  border: 1px solid var(--neva-border);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.neva-pill {
+  color: var(--neva-text-sub);
+  border-radius: 999px;
+  transition: all 180ms ease;
+}
+
+.neva-pill:hover {
+  color: var(--neva-text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.neva-pill-active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--neva-text-main);
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.22);
+}
+
+.neon-border {
+  position: relative;
+}
+
+.neon-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--neva-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.9);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.95);
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.72);
+  border-radius: 999px;
+}
+
+option {
+  background: #081121;
+  color: #f8fafc;
+}
